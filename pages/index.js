@@ -1,65 +1,81 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import _get from "lodash/get";
+import _snakeCase from "lodash/snakeCase";
+import React, { useState } from "react";
+import { toPng } from "html-to-image";
+import { saveAs } from "file-saver";
+
+import AppLogo from "../assets/img/app_logo.png";
+import LanJee from "../assets/img/lan_jee.png";
 
 export default function Home() {
+  const [quote, setQuote] = useState("");
+  const [author, setAuthor] = useState("");
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+    <div>
+      <div style={{ backgroundColor: "#ebf5fe" }}>
+        <div className="container mx-auto py-6 flex items-center">
+          <img className="h-16 w-16" src={AppLogo} />
+          <div className="ml-4 text-xl font-bold">Pot Utilities</div>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      </div>
+      <div className="container mx-auto pt-4">
+        <div className="grid grid-cols-5 gap-24">
+          <div className="col-span-2 space-y-2">
+            <label className="container flow-root" for="quote">
+              Câu nói:
+            </label>
+            <textarea
+              className="container flow-root rounded focus:outline-none focus:ring focus:border-blue-300"
+              placeholder="Nhập câu nói vào đây"
+              id="quote"
+              name="quote"
+              rows="2"
+              onChange={(e) => setQuote(_get(e, "target.value"))}
+            />
+            <label className="container flow-root" for="author">
+              Chữ ký:
+            </label>
+            <input
+              type="text"
+              className="container flow-root rounded focus:outline-none focus:ring focus:border-blue-300"
+              placeholder="Nhập chữ ký vào đây"
+              id="author"
+              name="author"
+              onChange={(e) => setAuthor(_get(e, "target.value"))}
+            />
+            <button
+              className="flow-root bg-green-500 hover:bg-green-700 px-4 py-2 rounded"
+              onClick={() => {
+                toPng(document.getElementById("quote-block")).then(
+                  (dataUrl) => {
+                    saveAs(dataUrl, `${_snakeCase(quote.substr(0, 10))}.png`);
+                  }
+                );
+              }}
+            >
+              Tải về
+            </button>
+          </div>
+          <div className="col-span-3">
+            <div
+              id="quote-block"
+              class="bg-white	aspect-w-16 aspect-h-9 rounded border-solid bg-contain bg-no-repeat bg-left-bottom"
+              style={{
+                backgroundImage: `url(${LanJee})`,
+              }}
+            >
+              <div className="container h-full grid grid-cols-5 gap-4">
+                <div className="col-span-2" />
+                <div className="col-span-3 flex flex-col items-center justify-center text-2xl leading-relaxed pr-8 font-semibold whitespace-normal break-all">
+                  <div>{quote}</div>
+                  <div className="mt-12">{author}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
