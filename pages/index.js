@@ -6,10 +6,12 @@ import { saveAs } from "file-saver";
 
 import AppLogo from "../assets/img/app_logo.png";
 import LanJee from "../assets/img/lan_jee.png";
+import DungLee from "../assets/img/dung_lee.png";
 
 export default function Home() {
   const [quote, setQuote] = useState("");
   const [author, setAuthor] = useState("");
+  const [image, setImage] = useState(LanJee);
 
   return (
     <div>
@@ -45,7 +47,15 @@ export default function Home() {
               onChange={(e) => setAuthor(_get(e, "target.value"))}
             />
             <button
-              className="flow-root bg-green-500 hover:bg-green-700 px-4 py-2 rounded"
+              className="flow-root bg-red-500 hover:bg-red-700 px-4 py-2 rounded w-40"
+              onClick={() => {
+                setImage(DungLee);
+              }}
+            >
+              DungLee
+            </button>
+            <button
+              className="flow-root bg-green-500 hover:bg-green-700 px-4 py-2 rounded w-40"
               onClick={() => {
                 toPng(document.getElementById("quote-block")).then(
                   (dataUrl) => {
@@ -64,7 +74,7 @@ export default function Home() {
               style={{
                 width: "100%",
                 paddingBottom: "56.25%",
-                backgroundImage: `url(${LanJee})`,
+                backgroundImage: `url(${image})`,
               }}
             >
               <div
