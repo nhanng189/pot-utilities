@@ -60,16 +60,27 @@ export default function Home() {
           <div className="col-span-3">
             <div
               id="quote-block"
-              class="bg-white	aspect-w-16 aspect-h-9 rounded border-solid bg-contain bg-no-repeat bg-left-bottom"
+              className="relative bg-white rounded border-solid bg-contain bg-no-repeat bg-left-bottom"
               style={{
+                width: "100%",
+                paddingBottom: "56.25%",
                 backgroundImage: `url(${LanJee})`,
               }}
             >
-              <div className="container h-full grid grid-cols-5 gap-4">
-                <div className="col-span-2" />
-                <div className="col-span-3 flex flex-col items-center justify-center text-2xl leading-relaxed pr-8 font-semibold whitespace-normal break-all">
-                  <div>{quote}</div>
-                  <div className="mt-12">{author}</div>
+              <div
+                className="absolute container h-full"
+                style={{
+                  top: 0,
+                  left: 0,
+                }}
+              >
+                <div className="container h-full grid grid-cols-5 gap-4">
+                  <div className="col-span-2" />
+                  <div className="col-span-3 text-2xl leading-relaxed pr-8 font-semibold whitespace-normal break-all text-center whitespace-pre-line m-auto">
+                    <div>{quote}</div>
+                    <br />
+                    <div>{author}</div>
+                  </div>
                 </div>
               </div>
             </div>
