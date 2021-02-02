@@ -7,6 +7,7 @@ import { saveAs } from "file-saver";
 import AppLogo from "../assets/img/app_logo.png";
 import LanJee from "../assets/img/lan_jee.png";
 import DungLee from "../assets/img/dung_lee.png";
+import NamLee from "../assets/img/nam_lee.png";
 
 export default function Home() {
   const [quote, setQuote] = useState("");
@@ -53,6 +54,14 @@ export default function Home() {
               }}
             >
               DungLee
+            </button>
+            <button
+              className="flow-root bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded w-40"
+              onClick={() => {
+                setImage(NamLee);
+              }}
+            >
+              NamLee
             </button>
             <button
               className="flow-root bg-green-500 hover:bg-green-700 px-4 py-2 rounded w-40"
