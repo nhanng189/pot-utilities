@@ -1,117 +1,99 @@
+import _ from "lodash";
 import Head from "next/head";
-import _get from "lodash/get";
-import _snakeCase from "lodash/snakeCase";
 import React, { useState } from "react";
-import { toPng } from "html-to-image";
-import { saveAs } from "file-saver";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import axios from "axios";
 
-import AppLogo from "../assets/img/app_logo.png";
-import LanJee from "../assets/img/lan_jee.png";
-import DungLee from "../assets/img/dung_lee.png";
-import NamLee from "../assets/img/nam_lee.png";
-
-export default function Home() {
-  const [quote, setQuote] = useState("");
-  const [author, setAuthor] = useState("");
-  const [image, setImage] = useState(LanJee);
+export default function UrlShortener() {
+  const [shortedUrl, setShortedUrl] = useState();
 
   return (
     <>
       <Head>
-        <title>Lan Jee</title>
+        <title>Url Shortener</title>
+        <meta property="og:title" content="Url Shortener" />
+        <meta
+          property="og:description"
+          content="Offering Url Shortener service with custom meta tags"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <div style={{ backgroundColor: "#ebf5fe" }}>
-          <div className="container mx-auto py-6 flex items-center">
-            <img className="h-16 w-16" src={AppLogo} />
-            <div className="ml-4 text-xl font-bold">Pot Utilities</div>
-          </div>
-        </div>
-        <div className="container mx-auto pt-4">
-          <div className="grid grid-cols-5 gap-24">
-            <div className="col-span-2 space-y-2">
-              <label className="container flow-root" for="quote">
-                Câu nói:
-              </label>
-              <textarea
-                className="container flow-root rounded focus:outline-none focus:ring focus:border-blue-300"
-                placeholder="Nhập câu nói vào đây"
-                id="quote"
-                name="quote"
-                rows="2"
-                onChange={(e) => setQuote(_get(e, "target.value"))}
+      <div className="container mx-auto my-8 space-y-4">
+        <Formik
+          initialValues={{ url: "", title: "", description: "", image: "" }}
+          validate={(values) => {
+            const errors = {};
+            if (!values.url) {
+              errors.url = "Required";
+            }
+            return errors;
+          }}
+          onSubmit={async (values, { setSubmitting }) => {
+            try {
+              const { data } = await axios.post("/api/entry", values);
+              setSubmitting(false);
+              setShortedUrl(
+                `https://otuti.ml/${_.get(data, "code")}`
+              );
+            } catch (error) {
+              console.log("error", error);
+            }
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form className="container space-y-4">
+              <Field
+                className="container flow-root rounded border-2 p-2"
+                name="url"
+                placeholder="Paste your URL"
               />
-              <label className="container flow-root" for="author">
-                Chữ ký:
-              </label>
-              <input
-                type="text"
-                className="container flow-root rounded focus:outline-none focus:ring focus:border-blue-300"
-                placeholder="Nhập chữ ký vào đây"
-                id="author"
-                name="author"
-                onChange={(e) => setAuthor(_get(e, "target.value"))}
+              <ErrorMessage
+                className="flow-root text-red-500 px-3 w-min"
+                name="url"
+                component="div"
+              />
+              <Field
+                className="container flow-root rounded border-2 p-2"
+                name="title"
+                placeholder="Type your title"
+              />
+              <Field
+                className="container flow-root rounded border-2 p-2"
+                name="description"
+                placeholder="Type your description"
+              />
+              <Field
+                className="container flow-root rounded border-2 p-2"
+                name="image"
+                placeholder="Paste your image url"
               />
               <button
-                className="flow-root bg-red-500 hover:bg-red-700 px-4 py-2 rounded w-40"
-                onClick={() => {
-                  setImage(DungLee);
-                }}
+                className="container flow-root rounded bg-green-500 p-2"
+                type="submit"
+                disabled={isSubmitting}
               >
-                DungLee
+                Submit
               </button>
-              <button
-                className="flow-root bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded w-40"
-                onClick={() => {
-                  setImage(NamLee);
-                }}
-              >
-                NamLee
-              </button>
-              <button
-                className="flow-root bg-green-500 hover:bg-green-700 px-4 py-2 rounded w-40"
-                onClick={() => {
-                  toPng(document.getElementById("quote-block")).then(
-                    (dataUrl) => {
-                      saveAs(dataUrl, `${_snakeCase(quote.substr(0, 10))}.png`);
-                    }
-                  );
-                }}
-              >
-                Tải về
-              </button>
-            </div>
-            <div className="col-span-3">
-              <div
-                id="quote-block"
-                className="relative bg-white rounded border-solid bg-contain bg-no-repeat bg-left-bottom"
-                style={{
-                  width: "100%",
-                  paddingBottom: "56.25%",
-                  backgroundImage: `url(${image})`,
-                }}
-              >
-                <div
-                  className="absolute container h-full"
-                  style={{
-                    top: 0,
-                    left: 0,
+            </Form>
+          )}
+        </Formik>
+        {shortedUrl && (
+          <>
+            <div className="flex items-center justify-center">
+              <div className="flow-root rounded p-2">{shortedUrl}</div>
+              <div className="ml-4">
+                <button
+                  className="flow-root rounded bg-green-500 active:bg-green-700 p-2"
+                  onClick={() => {
+                    navigator.clipboard.writeText(shortedUrl);
                   }}
                 >
-                  <div className="container h-full grid grid-cols-5 gap-4">
-                    <div className="col-span-2" />
-                    <div className="col-span-3 text-2xl leading-relaxed pr-8 font-semibold whitespace-normal break-all text-center whitespace-pre-line m-auto">
-                      <div>{quote}</div>
-                      <br />
-                      <div>{author}</div>
-                    </div>
-                  </div>
-                </div>
+                  Copy
+                </button>
               </div>
             </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </>
   );
