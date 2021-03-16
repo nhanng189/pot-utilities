@@ -29,6 +29,13 @@ function UrlGateway({ data }) {
         {data.image && (
           <meta name="og:image" property="og:image" content={data.image} />
         )}
+        {data.applicationName && (
+          <meta
+            name="application-name"
+            property="application-name"
+            content={data.applicationName}
+          />
+        )}
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div />
