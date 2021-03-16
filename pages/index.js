@@ -32,9 +32,7 @@ export default function UrlShortener() {
             try {
               const { data } = await axios.post("/api/entry", values);
               setSubmitting(false);
-              setShortedUrl(
-                `https://otuti.ml/${_.get(data, "code")}`
-              );
+              setShortedUrl(`https://otuti.ml/${_.get(data, "code")}`);
             } catch (error) {
               console.log("error", error);
             }
@@ -43,7 +41,7 @@ export default function UrlShortener() {
           {({ isSubmitting }) => (
             <Form className="container space-y-4">
               <Field
-                className="container flow-root rounded border-2 p-2"
+                className="container flow-root rounded border-2 p-2 border-red-500"
                 name="url"
                 placeholder="Paste your URL"
               />
@@ -51,6 +49,12 @@ export default function UrlShortener() {
                 className="flow-root text-red-500 px-3 w-min"
                 name="url"
                 component="div"
+              />
+              <br />
+              <Field
+                className="container flow-root rounded border-2 p-2"
+                name="applicationName"
+                placeholder="Type your application name"
               />
               <Field
                 className="container flow-root rounded border-2 p-2"
