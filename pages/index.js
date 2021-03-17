@@ -1,103 +1,108 @@
-import _ from "lodash";
 import Head from "next/head";
-import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import axios from "axios";
+import React from "react";
+import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 
-export default function UrlShortener() {
-  const [shortedUrl, setShortedUrl] = useState();
+export default function Landing() {
+  const router = useRouter();
 
   return (
     <>
       <Head>
-        <title>Url Shortener</title>
-        <meta property="og:title" content="Url Shortener" />
-        <meta
-          property="og:description"
-          content="Offering Url Shortener service with custom meta tags"
-        />
+        <title>Otuti | Tiện ích như nồi</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content="[Otuti] Những tiện ích như nồi" />
+        <meta property="og:url" content="https://otuti.tk/" />
+        <meta
+          name="description"
+          content="Ở đây cung cấp những chiếc tiện ích có như không có, tóm lại là như nồi, cam kết không giúp được gì."
+        />
       </Head>
-      <div className="container mx-auto my-8 space-y-4">
-        <Formik
-          initialValues={{ url: "", title: "", description: "", image: "" }}
-          validate={(values) => {
-            const errors = {};
-            if (!values.url) {
-              errors.url = "Required";
-            }
-            return errors;
-          }}
-          onSubmit={async (values, { setSubmitting }) => {
-            try {
-              const { data } = await axios.post("/api/entry", values);
-              setSubmitting(false);
-              setShortedUrl(`https://otuti.ml/${_.get(data, "code")}`);
-            } catch (error) {
-              console.log("error", error);
-            }
-          }}
-        >
-          {({ isSubmitting }) => (
-            <Form className="container space-y-4">
-              <Field
-                className="container flow-root rounded border-2 p-2 border-red-500"
-                name="url"
-                placeholder="Paste your URL"
+      <div className="font-mono text-white w-full h-full px-4">
+        <div className="container h-full m-auto flex flex-col">
+          <div
+            className="flex flex-wrap	justify-center items-center py-4"
+            style={{ minHeight: 84 }}
+          >
+            <motion.figure className="flex items-center" layoutId="app-logo">
+              <img
+                style={{ height: 48 }}
+                src="/pot.png"
+                alt="app-logo"
+                className="mb-4 sm:mb-0"
               />
-              <ErrorMessage
-                className="flow-root text-red-500 px-3 w-min"
-                name="url"
-                component="div"
-              />
-              <br />
-              <Field
-                className="container flow-root rounded border-2 p-2"
-                name="applicationName"
-                placeholder="Type your application name"
-              />
-              <Field
-                className="container flow-root rounded border-2 p-2"
-                name="title"
-                placeholder="Type your title"
-              />
-              <Field
-                className="container flow-root rounded border-2 p-2"
-                name="description"
-                placeholder="Type your description"
-              />
-              <Field
-                className="container flow-root rounded border-2 p-2"
-                name="image"
-                placeholder="Paste your image url"
-              />
-              <button
-                className="container flow-root rounded bg-green-500 p-2"
-                type="submit"
-                disabled={isSubmitting}
+              <div className="ml-4 text-xl font-bold">p[Otuti]lities</div>
+            </motion.figure>
+            <div className="flex-grow-0 sm:flex-grow"></div>
+            <div
+              style={{ height: "fit-content" }}
+              className="flex items-center"
+            >
+              <div
+                className="mx-2 text-center transition duration-100 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
+                onClick={() => {
+                  router.push("/meme-quotes");
+                }}
               >
-                Submit
-              </button>
-            </Form>
-          )}
-        </Formik>
-        {shortedUrl && (
-          <>
-            <div className="flex items-center justify-center">
-              <div className="flow-root rounded p-2">{shortedUrl}</div>
-              <div className="ml-4">
-                <button
-                  className="flow-root rounded bg-green-500 active:bg-green-700 p-2"
-                  onClick={() => {
-                    navigator.clipboard.writeText(shortedUrl);
-                  }}
-                >
-                  Copy
-                </button>
+                Meme quote
+              </div>
+              <div className="mx-2">|</div>
+              <div
+                className="mx-2 text-center transition duration-100 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
+                onClick={() => {
+                  router.push("/url-shortener");
+                }}
+              >
+                Url shortener
+              </div>
+              <div className="mx-2">|</div>
+              <div className="mx-2 text-center transition duration-100 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 cursor-not-allowed">
+                Soukuban
               </div>
             </div>
-          </>
-        )}
+          </div>
+          <div
+            className="flex flex-col justify-center space-y-8"
+            style={{ minHeight: "calc(100vh - 84px)" }}
+          >
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="flow-root text-4xl font-bold text-center"
+            >
+              Tôi đi code
+            </motion.div>
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.3 }}
+              className="flow-root text-base leading-relaxed space-y-2 text-center"
+            >
+              <div className="flow-root">
+                Hằng năm cứ vào cuối thu, lá ngoài đường rụng nhiều và trên
+                không có những đám mây bàng bạc, lòng tôi lại nao nức những kỷ
+                niệm hoang mang của buổi tựu trường.
+              </div>
+              <div className="flow-root">
+                Tôi không thể nào quên được những cảm giác trong sáng ấy nảy nở
+                trong lòng tôi như mấy cành hoa tươi mỉm cười giữa bầu trời
+                quang đãng. Những ý tưởng ấy tôi chưa lần nào ghi lên giấy, vì
+                hồi ấy tôi không biết ghi và ngày nay tôi không nhớ hết. Nhưng
+                mỗi lần thấy mấy em nhỏ rụt rè núp dưới nón mẹ lần đầu tiên đến
+                trường, lòng tôi lại tưng bừng rộn rã.
+              </div>
+              <div className="flow-root">
+                Buổi sáng mai hôm ấy, một buổi mai đầy sương thu và gió lạnh. Mẹ
+                tôi âu yếm nắm tay tôi dẫn đi trên con đường làng dài và hẹp.
+                Con đường này tôi đã quen đi lại lắm lần, nhưng lần này tự nhiên
+                tôi thấy lạ. Cảnh vật chung quanh tôi đều thay đổi, vì chính
+                lòng tôi đang có sự thay đổi lớn:
+              </div>
+              <div>Hôm nay tôi đi code.</div>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </>
   );
