@@ -56,8 +56,13 @@ export default function Landing() {
                 Url shortener
               </div>
               <div className="mx-2">|</div>
-              <div className="mx-2 text-center transition duration-100 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 cursor-not-allowed">
-                Soukuban
+              <div
+                className="mx-2 text-center transition duration-100 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
+                onClick={() => {
+                  router.push("/wheel-of-names");
+                }}
+              >
+                Wheel
               </div>
             </div>
           </div>
