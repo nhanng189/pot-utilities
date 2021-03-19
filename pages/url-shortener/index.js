@@ -112,7 +112,7 @@ export default function UrlShortener() {
                 </div>
                 <br />
                 <button
-                  className="container flow-root bg-transparent rounded bg-green-500 p-2"
+                  className="container flow-root rounded bg-green-500 p-2"
                   type="submit"
                   disabled={isSubmitting}
                 >
