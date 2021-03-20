@@ -2,8 +2,6 @@
   display: inline-block;
   position: relative;
   overflow: hidden;
-  width: 600px;
-  height: 600px;
 }
 
 #wheel {
@@ -24,10 +22,10 @@
   width: 30%;
   height: 30%;
   margin: -15%;
-  color: black;
+  color: white;
   box-shadow: 0 0 0 8px currentColor, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
   border-radius: 50%;
-  transition: 0.69s;
+  transition: 0.5s;
   font-weight: bold;
 }
 

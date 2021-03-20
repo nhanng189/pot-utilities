@@ -3,25 +3,32 @@ import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 
+import { useAnimationFrame, useWindowSize } from "../../utils/hooks";
+
 import "./style.scss";
 
 const FRICTION = 0.995; // 0.995 = soft, 0.99 = mid, 0.98 = hard
 const rand = (m, M) => Math.random() * (M - m) + m;
+const COLOR_WHEEL = [
+  "#003300",
+  "#000033",
+  "#330000",
+  "#333333",
+  "#003333",
+  "#330033",
+  "#333300",
+  "#006600",
+  "#330066",
+  "#006633",
+];
 
 export default function Wheel() {
   const router = useRouter();
   const [angVel, setAngVel] = useState(0); // Vận tốc góc
   const [angle, setAngle] = useState(0); // Góc
-  const [sectors, setSectors] = useState([
-    { color: "#f82", label: "Luong Nhan" },
-    { color: "#0bf", label: "Hoang Lam" },
-    { color: "#fb0", label: "Nhut 5 tay" },
-    { color: "#0fb", label: "Kiet Lac" },
-    { color: "#b0f", label: "Bung bu" },
-    { color: "#f0b", label: "Nhan map" },
-    { color: "#bf0", label: "Nam phen" },
-  ]);
-  const [currentSector, setCurrentSector] = useState();
+  const [content, setContent] = useState("");
+  const [sectors, setSectors] = useState([]);
+  const [currentSector, setCurrentSector] = useState(0);
 
   const canvas = useRef();
   let ctx = null;
@@ -31,12 +38,61 @@ export default function Wheel() {
     const canvasEle = canvas.current;
     canvasEle.width = canvasEle.clientWidth;
     canvasEle.height = canvasEle.clientHeight;
-
-    // Get context of the canvas
-    ctx = canvasEle.getContext("2d");
   }, []);
 
   useEffect(() => {
+    if (content === "") {
+      setContent("Wheel\nBy\nOtuti");
+    }
+  }, [content]);
+
+  useEffect(() => {
+    const lines = content.split(/\n/);
+    const arrLabel = [];
+    for (let i = 0; i < lines.length; i++) {
+      // only push this line if it contains a non whitespace character.
+      if (/\S/.test(lines[i])) {
+        arrLabel.push(lines[i].trim());
+      }
+    }
+
+    if (arrLabel.length === 0) {
+      setSectors([
+        {
+          color: COLOR_WHEEL[0],
+          label: "Wheel",
+        },
+        {
+          color: COLOR_WHEEL[1],
+          label: "By",
+        },
+        {
+          color: COLOR_WHEEL[2],
+          label: "Otuti",
+        },
+      ]);
+    }
+
+    let i = 0;
+    setSectors(
+      arrLabel.reduce((sectors, label) => {
+        if (i >= COLOR_WHEEL.length) {
+          i = 0;
+        }
+        sectors.push({
+          color: COLOR_WHEEL[i],
+          label,
+        });
+        i++;
+        return sectors;
+      }, [])
+    );
+  }, [content]);
+
+  useEffect(() => {
+    const canvasEle = canvas.current;
+    ctx = canvasEle.getContext("2d");
+
     const rad = ctx.canvas.width / 2;
     const arc = (2 * Math.PI) / sectors.length;
     sectors.forEach((sector, index) => {
@@ -62,28 +118,10 @@ export default function Wheel() {
     });
   }, [sectors]);
 
-  const useAnimationFrame = (callback) => {
-    const engineRef = React.useRef();
-    const previousEngineRef = React.useRef();
-
-    const animate = (engine) => {
-      if (previousEngineRef.current != undefined) {
-        callback();
-      }
-      previousEngineRef.current = engine;
-      engineRef.current = requestAnimationFrame(animate);
-    };
-
-    React.useEffect(() => {
-      engineRef.current = requestAnimationFrame(animate);
-      return () => cancelAnimationFrame(engineRef.current);
-    }, []);
-  };
-
   useAnimationFrame(() => {
     setAngVel((prevAngVel) => {
       const newAngVel = prevAngVel * FRICTION;
-      if (newAngVel < 0.002) {
+      if (newAngVel < 0.001) {
         return 0;
       }
       return newAngVel;
@@ -101,12 +139,11 @@ export default function Wheel() {
   useEffect(() => {
     const canvasEle = canvas.current;
     canvasEle.style.transform = `rotate(${angle - Math.PI / 2}rad)`;
-
     setCurrentSector(
       Math.floor(sectors.length - (angle / (2 * Math.PI)) * sectors.length) %
         sectors.length
     );
-  }, [angle]);
+  }, [angle, sectors]);
 
   return (
     <>
@@ -146,26 +183,46 @@ export default function Wheel() {
           </div>
 
           <div
-            className="flex items-center justify-center"
-            style={{ minHeight: "calc(100vh - 84px)" }}
+            className="relative grid grid-cols-3 gap-4"
+            style={{ height: "calc(100vh - 84px)" }}
           >
-            <div id="wheelOfFortune">
+            <div
+              className="col-span-2"
+              id="wheelOfFortune"
+              style={{
+                width: "500px",
+                height: "500px",
+              }}
+            >
               <canvas id="wheel" ref={canvas}></canvas>
-              <div>Van toc goc: {angVel}</div>
-              <div>Goc (rad): {angle}</div>
               <div
                 onClick={() => {
-                  setAngVel(rand(0.2, 0.5));
+                  if (sectors.length > 0) {
+                    setAngVel(rand(0.2, 0.5));
+                  }
                 }}
                 id="spin"
                 style={{
-                  background: sectors[currentSector]
-                    ? `${sectors[currentSector].color}`
-                    : "white",
+                  background:
+                    sectors[currentSector] && `${sectors[currentSector].color}`,
                 }}
               >
                 {sectors[currentSector] ? sectors[currentSector].label : "SPIN"}
               </div>
+            </div>
+
+            <div className="py-8 relative">
+              <button className="absolute right-0 rounded bg-green-500 p-2">
+                Suffle
+              </button>
+              <textarea
+                className="bg-transparent h-full w-full rounded border-2 p-4"
+                placeholder="Enter text here"
+                value={content}
+                onChange={(e) => {
+                  setContent(e.target.value);
+                }}
+              ></textarea>
             </div>
           </div>
         </div>
