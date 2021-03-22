@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
+import useSound from "use-sound";
 
 import { useAnimationFrame } from "../../utils/hooks";
 
@@ -59,6 +60,8 @@ export default function Wheel() {
   const [content, setContent] = useState("");
   const [currentSector, setCurrentSector] = useState(0);
   const [winPopup, setWinPopup] = useState("");
+  const [playUh, optsUh] = useSound("/uh.mp3", { interrupt: true });
+  const [playYeah, optsYeah] = useSound("/yeah.mp3", { interrupt: true });
 
   const canvas = useRef();
   let ctx = null;
@@ -114,7 +117,7 @@ export default function Wheel() {
   useAnimationFrame(() => {
     setAngVel((prevAngVel) => {
       const newAngVel = prevAngVel * FRICTION;
-      if (newAngVel < 0.001) {
+      if (newAngVel < 0.0001) {
         return 0;
       }
       return newAngVel;
@@ -147,6 +150,8 @@ export default function Wheel() {
             requestAnimationFrame(frame);
           }
         })();
+        optsYeah.stop();
+        playYeah();
         setWinPopup(
           (sectors[currentSector] && sectors[currentSector].label) || ""
         );
@@ -168,6 +173,11 @@ export default function Wheel() {
     );
   }, [angle, content]);
 
+  useEffect(() => {
+    optsUh.stop();
+    playUh();
+  }, [currentSector]);
+
   const sectors = getSectorsFromContent(content);
   return (
     <>
@@ -179,7 +189,7 @@ export default function Wheel() {
       </Head>
       {winPopup !== "" && (
         <div className="absolute w-full h-full flex items-center justify-center z-50 bg-gray-700 bg-opacity-80">
-          <div className="w-2/6 h-2/6 rounded bg-white p-8 flex flex-col items-center space-y-4">
+          <div className="w-11/12	h-5/6 sm:w-2/6 sm:h-2/6 rounded bg-white p-8 flex flex-col items-center space-y-4">
             <img
               className="flow-root"
               src="/champion.svg"
