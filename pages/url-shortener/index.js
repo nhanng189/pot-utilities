@@ -60,7 +60,7 @@ export default function UrlShortener() {
             }}
             onSubmit={async (values, { setSubmitting }) => {
               try {
-                const { data } = await axios.post("/api/entry", values);
+                const { data } = await axios.post("/api/shortener", values);
                 setSubmitting(false);
                 setShortedUrl(`https://otuti.ml/${_.get(data, "code")}`);
               } catch (error) {

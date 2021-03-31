@@ -31,7 +31,7 @@ const getSectorsFromContent = (content) => {
   }
 
   let i = 0;
-  return arrLabel.reduce((sectors, label) => {
+  const sectors = arrLabel.reduce((sectors, label) => {
     if (i >= COLOR_WHEEL.length) {
       i = 0;
     }
@@ -42,6 +42,16 @@ const getSectorsFromContent = (content) => {
     i++;
     return sectors;
   }, []);
+
+  if (sectors.length === 0) {
+    return [
+      {
+        color: COLOR_WHEEL[0],
+        label: "",
+      },
+    ];
+  }
+  return sectors;
 };
 
 const getShuffleContent = (content) => {
@@ -71,13 +81,12 @@ export default function Wheel() {
     const canvasEle = canvas.current;
     canvasEle.width = canvasEle.clientWidth;
     canvasEle.height = canvasEle.clientHeight;
+
+    setContent(localStorage.getItem("content") || "Wheel\nBy\nOtuti");
   }, []);
 
   useEffect(() => {
-    // Set default content
-    if (content === "") {
-      setContent("Wheel\nBy\nOtuti");
-    }
+    localStorage.setItem("content", content);
   }, [content]);
 
   useEffect(() => {
@@ -189,7 +198,7 @@ export default function Wheel() {
       </Head>
       {winPopup !== "" && (
         <div className="absolute w-full h-full flex items-center justify-center z-50 bg-gray-700 bg-opacity-80">
-          <div className="w-11/12	h-5/6 sm:w-2/6 sm:h-2/6 rounded bg-white p-8 flex flex-col items-center space-y-4">
+          <div className="rounded bg-white p-8 flex flex-col items-center space-y-4">
             <img
               className="flow-root"
               src="/champion.svg"
@@ -264,15 +273,16 @@ export default function Wheel() {
                     <canvas id="wheel" ref={canvas}></canvas>
                     <div
                       onClick={() => {
-                        if (sectors.length > 0) {
+                        if (sectors.length > 0 && angVel === 0) {
                           setAngVel(rand(0.2, 0.5));
                         }
                       }}
                       id="spin"
                       style={{
-                        background:
-                          sectors[currentSector] &&
-                          `${sectors[currentSector].color}`,
+                        cursor: angVel === 0 ? "pointer" : "not-allowed",
+                        background: sectors[currentSector]
+                          ? `${sectors[currentSector].color}`
+                          : COLOR_WHEEL[0],
                       }}
                     >
                       {sectors[currentSector]
@@ -286,6 +296,10 @@ export default function Wheel() {
 
             <div className="sm:py-8 relative">
               <button
+                disabled={angVel !== 0}
+                style={{
+                  cursor: angVel === 0 ? "pointer" : "not-allowed",
+                }}
                 className="absolute right-0 rounded bg-green-500 p-2"
                 onClick={() => {
                   setContent(getShuffleContent(content));
@@ -294,6 +308,9 @@ export default function Wheel() {
                 Shuffle
               </button>
               <textarea
+                style={{
+                  cursor: angVel === 0 ? "pointer" : "not-allowed",
+                }}
                 disabled={angVel !== 0}
                 className="bg-transparent h-96 w-full rounded border-2 p-4"
                 value={content}
