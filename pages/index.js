@@ -11,6 +11,7 @@ export default function Landing() {
       <Head>
         <title>Otuti | Tiện ích như nồi</title>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="search" type="application/opensearchdescription+xml" title="Otuti" href="/opensearch.xml" />
         <meta property="og:title" content="[Otuti] Những tiện ích như nồi" />
         <meta property="og:url" content="https://otuti.tk/" />
         <meta
@@ -63,6 +64,15 @@ export default function Landing() {
                 }}
               >
                 Wheel
+              </div>
+              <div className="mx-2">|</div>
+              <div
+                className="mx-2 text-center transition duration-100 ease-in-out transform hover:-translate-y-0.5 hover:scale-105 cursor-pointer"
+                onClick={() => {
+                  router.push("/text-to-speech");
+                }}
+              >
+                Text2Speech
               </div>
             </div>
           </div>
