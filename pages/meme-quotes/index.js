@@ -18,13 +18,14 @@ export default function Home() {
     <>
       <Head>
         <title>Otuti | Meme quotes</title>
+        <meta property="twitter:card" content="summary_large_image" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="bg-contain bg-mountain-pattern">
         <div className="container mx-auto pt-4">
           <div className="grid grid-cols-5 gap-24">
             <div className="col-span-2 space-y-2">
-              <label className="container flow-root" for="quote">
+              <label className="container flow-root" htmlFor="quote">
                 Câu nói:
               </label>
               <textarea
@@ -35,7 +36,7 @@ export default function Home() {
                 rows="2"
                 onChange={(e) => setQuote(_get(e, "target.value"))}
               />
-              <label className="container flow-root" for="author">
+              <label className="container flow-root" htmlFor="author">
                 Chữ ký:
               </label>
               <input

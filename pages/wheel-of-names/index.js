@@ -1,8 +1,6 @@
 import Head from "next/head";
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { motion } from "framer-motion";
-import confetti from "canvas-confetti";
 import useSound from "use-sound";
 
 import { useAnimationFrame } from "../../utils/hooks";
@@ -137,28 +135,6 @@ export default function Wheel() {
     // Get angle from angVel
     setAngle((prevAngle) => {
       if (prevAngle !== 0 && angVel === 0) {
-        const end = Date.now() + 5 * 1000;
-        const colors = ["#bb0000", "#ffffff"];
-        (function frame() {
-          confetti({
-            particleCount: 2,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-            colors: colors,
-          });
-          confetti({
-            particleCount: 2,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-            colors: colors,
-          });
-
-          if (Date.now() < end) {
-            requestAnimationFrame(frame);
-          }
-        })();
         optsYeah.stop();
         playYeah();
         setWinPopup(
@@ -250,7 +226,7 @@ export default function Wheel() {
               </div>
             </div>
             <div className="flex-grow-0 sm:flex-grow"></div>
-            <motion.figure className="flex items-center" layoutId="app-logo">
+            <div className="flex items-center">
               <img
                 style={{ height: 48 }}
                 src="/pot.png"
@@ -258,7 +234,7 @@ export default function Wheel() {
                 className="mb-4 sm:mb-0"
               />
               <div className="ml-4 text-xl font-bold">p[Otuti]lities</div>
-            </motion.figure>
+            </div>
             <div className="flex-grow-0 sm:flex-grow"></div>
           </div>
 

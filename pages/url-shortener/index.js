@@ -4,7 +4,6 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useRouter } from "next/router";
-import { motion } from "framer-motion";
 
 export default function UrlShortener() {
   const router = useRouter();
@@ -38,7 +37,7 @@ export default function UrlShortener() {
               </div>
             </div>
             <div className="flex-grow-0 sm:flex-grow"></div>
-            <motion.figure className="flex items-center" layoutId="app-logo">
+            <div className="flex items-center">
               <img
                 style={{ height: 48 }}
                 src="/pot.png"
@@ -46,7 +45,7 @@ export default function UrlShortener() {
                 className="mb-4 sm:mb-0"
               />
               <div className="ml-4 text-xl font-bold">p[Otuti]lities</div>
-            </motion.figure>
+            </div>
             <div className="flex-grow-0 sm:flex-grow"></div>
           </div>
           <Formik

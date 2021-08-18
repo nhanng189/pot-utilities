@@ -4,7 +4,6 @@ import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useRouter } from "next/router";
-import { motion } from "framer-motion";
 
 function TextToSpeech({ text }) {
   const router = useRouter();
@@ -45,7 +44,7 @@ function TextToSpeech({ text }) {
               </div>
             </div>
             <div className="flex-grow-0 sm:flex-grow"></div>
-            <motion.figure className="flex items-center" layoutId="app-logo">
+            <div className="flex items-center">
               <img
                 style={{ height: 48 }}
                 src="/pot.png"
@@ -53,7 +52,7 @@ function TextToSpeech({ text }) {
                 className="mb-4 sm:mb-0"
               />
               <div className="ml-4 text-xl font-bold">p[Otuti]lities</div>
-            </motion.figure>
+            </div>
             <div className="flex-grow-0 sm:flex-grow"></div>
           </div>
           <Formik
