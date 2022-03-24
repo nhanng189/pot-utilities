@@ -80,7 +80,7 @@ export default function Wheel() {
     canvasEle.width = canvasEle.clientWidth;
     canvasEle.height = canvasEle.clientHeight;
 
-    setContent(localStorage.getItem("content") || "Wheel\nBy\nOtuti");
+    setContent(localStorage.getItem("content") || "Nhập\nTên\nVô\nĐây\nNè");
   }, []);
 
   useEffect(() => {
@@ -167,10 +167,10 @@ export default function Wheel() {
   return (
     <>
       <Head>
-        <title>Otuti | Wheel</title>
+        <title>Xamxi | Vòng quay</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="Otuti wheel of names" />
-        <meta property="og:description" content="Wheel of names" />
+        <meta property="og:title" content="Vòng quay" />
+        <meta property="og:description" content="Vòng quay" />
       </Head>
       {winPopup !== "" && (
         <div className="absolute w-full h-full flex items-center justify-center z-50 bg-gray-700 bg-opacity-80">
@@ -209,20 +209,20 @@ export default function Wheel() {
           </div>
         </div>
       )}
-      <div className="font-mono text-white w-full h-full px-4">
+      <div className="font-mono text-purple-900 w-full h-full px-4">
         <div className="container h-full m-auto flex flex-col">
           <div
-            className="relative flex flex-wrap	justify-center items-center py-4"
+            className="relative flex flex-wrap justify-between items-center py-4"
             style={{ minHeight: 84 }}
           >
-            <div className="absolute left-0 flex items-center">
+            <div className="flex items-center">
               <div
                 className="mx-2 text-center transition duration-100 ease-in-out transform hover:-translate-x-1 hover:scale-105 cursor-pointer"
                 onClick={() => {
                   router.push("/");
                 }}
               >
-                {"<<"} Go back
+                {"<<"} Trang chủ
               </div>
             </div>
             <div className="flex-grow-0 sm:flex-grow"></div>
@@ -233,7 +233,7 @@ export default function Wheel() {
                 alt="app-logo"
                 className="mb-4 sm:mb-0"
               />
-              <div className="ml-4 text-xl font-bold">p[Otuti]lities</div>
+              <div className="ml-4 text-xl font-bold">Những thứ xàm xí</div>
             </div>
             <div className="flex-grow-0 sm:flex-grow"></div>
           </div>
@@ -281,7 +281,7 @@ export default function Wheel() {
                   setContent(getShuffleContent(content));
                 }}
               >
-                Shuffle
+                Xáo trộn
               </button>
               <textarea
                 style={{

@@ -12,20 +12,22 @@ const renderCategory = ({ image, title, description, linkTo }) => {
 
   return (
     <div
-      class="p-6 group rounded-lg border border-indigo-400 transition duration-100 transform hover:scale-105 hover:bg-indigo-400 cursor-pointer flex items-center"
+      class="p-6 group rounded-lg border border-purple-900 transition duration-100 transform hover:scale-105 hover:bg-purple-900 cursor-pointer flex items-center"
       onClick={() => {
-        router.push(linkTo);
+        linkTo && router.push(linkTo);
       }}
     >
       {image &&
         image({
-          className: "fill-current text-white group-hover:text-black",
+          className: "fill-current text-purple-900 group-hover:text-purple-50",
           width: 64,
           height: 64,
         })}
       <div className="space-y-2 ml-6 leading-relaxed">
-        <p class="font-bold text-white group-hover:text-black">{title}</p>
-        <p class="text-gray-300 group-hover:text-gray-900">{description}</p>
+        <p class="font-bold text-purple-900 group-hover:text-purple-50">
+          {title}
+        </p>
+        <p class="text-purple-900 group-hover:text-purple-50">{description}</p>
       </div>
     </div>
   );
@@ -35,11 +37,12 @@ function Landing() {
   return (
     <div className="space-y-16 font-mono container m-auto py-16 px-8">
       <div className="space-y-4">
-        <div className="text-center text-3xl tracking-wide font-extrabold text-white">
-          p[Otuti]lities
+        <div className="text-center text-3xl tracking-wide font-extrabold text-purple-900">
+          Những thứ xàm xí
         </div>
-        <div className="text-center tracking-wide text-white">
-          Cung cấp những chiếc tiện ích có cũng như không. Nói chung là như nồi
+        <div className="text-center tracking-wide text-purple-900">
+          Những chiếc tiện ích có cũng như không. Nói chung là xàm lắm đừng quan
+          tâm
         </div>
       </div>
       <div class="md:grid md:grid-cols-2 md:gap-x-12 md:gap-y-8">
@@ -48,28 +51,28 @@ function Landing() {
           title: "Tạo liên kết rút gọn",
           description:
             "Hỗ trợ tùy biến meta tag để gây lú cực mạnh cho người xem, không bấm link thì đố ai biết link gì luôn.",
-          linkTo: "/url-shortener",
+          linkTo: "/lien-ket-rut-gon",
         })}
         {renderCategory({
           image: WheelSvg,
           title: "Vòng quay ngẫu nhiên",
           description:
             "Công cụ chọn tên ngẫu nhiên từ danh sách tên được nhập sẵn, kết hợp với hiệu ứng âm thanh hài cốt.",
-          linkTo: "/wheel-of-names",
+          linkTo: "/vong-quay",
         })}
         {renderCategory({
           image: VoiceSvg,
           title: "Giọng chị Google",
           description:
             "Nhập văn bản bất kỳ để chuyển thành giọng chị Google, bấm nút tải phát nữa là được luôn.",
-          linkTo: "text-to-speech",
+          linkTo: "chi-google",
         })}
         {renderCategory({
           image: QuoteSVG,
-          title: "Lân Jee quote",
+          title: "Chưa nghĩ ra cái gì mới nữa hết",
           description:
-            "Cái này chưa code xong nên còn chuối lắm, lưu ý là Lân Jee chưa bao giờ nói những điều này.",
-          linkTo: "/meme-quotes",
+            "Để đây cho đẹp layout",
+          // linkTo: "/meme-quotes",
         })}
       </div>
     </div>
@@ -80,15 +83,15 @@ const withHead = (ChildComponent) => () =>
   (
     <>
       <Head>
-        <title>Tiện ích như nồi</title>
+        <title>Những thứ xàm xí</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="search"
           type="application/opensearchdescription+xml"
-          title="Otuti"
+          title="Xamxi"
           href="/opensearch.xml"
         />
-        <meta property="og:title" content="Những tiện ích như nồi" />
+        <meta property="og:title" content="Những thứ xàm xí" />
         <meta property="og:url" content="https://xamxi.tk/" />
         <meta
           property="og:description"

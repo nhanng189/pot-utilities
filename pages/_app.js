@@ -33,7 +33,7 @@ export default function MyApp({ Component, pageProps }) {
     <>
       <div
         style={{ zIndex: "-1" }}
-        className="fixed w-screen h-screen top-0 left-0 bg-cover bg-gray-900"
+        className="fixed w-screen h-screen top-0 left-0 bg-cover bg-purple-50"
       ></div>
       <Component {...pageProps} />
     </>

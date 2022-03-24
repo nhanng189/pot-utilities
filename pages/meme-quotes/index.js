@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Otuti | Meme quotes</title>
+        <title>Xamxi | Meme quotes</title>
         <meta property="twitter:card" content="summary_large_image" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
