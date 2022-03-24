@@ -15,7 +15,7 @@ function UrlGateway({ data }) {
   return (
     <>
       <Head>
-        <title>Gateway</title>
+        <title>Redirecting...</title>
         {data.title && (
           <meta name="og:title" property="og:title" content={data.title} />
         )}
