@@ -61,7 +61,7 @@ export default function UrlShortener() {
               try {
                 const { data } = await axios.post("/api/shortener", values);
                 setSubmitting(false);
-                setShortedUrl(`https://otuti.ml/${_.get(data, "code")}`);
+                setShortedUrl(`https://xamxi.ml/${_.get(data, "code")}`);
               } catch (error) {
                 console.log("error", error);
               }

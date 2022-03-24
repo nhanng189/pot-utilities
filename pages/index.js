@@ -89,7 +89,7 @@ const withHead = (ChildComponent) => () =>
           href="/opensearch.xml"
         />
         <meta property="og:title" content="Những tiện ích như nồi" />
-        <meta property="og:url" content="https://otuti.tk/" />
+        <meta property="og:url" content="https://xamxi.tk/" />
         <meta
           property="og:description"
           content="Ở đây cung cấp những chiếc tiện ích có như không có, tóm lại là như nồi, cam kết không giúp được gì."

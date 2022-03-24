@@ -3,5 +3,5 @@
   <ShortName>Text to speech</ShortName>
   <Description>Convert your text to speech</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Url type="text/html" method="get" template="https://otuti.tk/text-to-speech/?text={searchTerms}"/>
+  <Url type="text/html" method="get" template="https://xamxi.tk/text-to-speech/?text={searchTerms}"/>
 </OpenSearchDescription>
