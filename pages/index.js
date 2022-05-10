@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 import VoiceSvg from "../components/svg/voice";
 import WheelSvg from "../components/svg/wheel";
 import UrlSvg from "../components/svg/link";
-import QuoteSVG from "../components/svg/quote";
+// import QuoteSVG from "../components/svg/quote";
+import SlackSVG from "../components/svg/slack";
 
 const renderCategory = ({ image, title, description, linkTo }) => {
   const router = useRouter();
@@ -68,11 +69,11 @@ function Landing() {
           linkTo: "chi-google",
         })}
         {renderCategory({
-          image: QuoteSVG,
-          title: "Chưa nghĩ ra cái gì mới nữa hết",
-          description:
-            "Để đây cho đẹp layout",
-          // linkTo: "/meme-quotes",
+          image: SlackSVG,
+          title: "Slack APP: Poll",
+          description: 
+            "App cho Slack để tạo Poll, không bị giới hạn số lượng",
+          linkTo: "https://slack.com/oauth/v2/authorize?client_id=765809097975.3442671727680&scope=chat:write,commands,chat:write.public&user_scope=",
         })}
       </div>
     </div>
