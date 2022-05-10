@@ -198,6 +198,20 @@ export default function Wheel() {
                 Remove winner
               </button>
               <button
+                className="rounded bg-red-500 p-2 mr-4"
+                onClick={() => {
+                  setContent((prevContent) => {
+                    prevContent += "\n";
+                    const re = new RegExp(`${winPopup}\n`, "g");
+                    let newContent = prevContent.replace(re, "");
+                    return newContent.substr(0, newContent.length - 1);
+                  });
+                  setWinPopup("");
+                }}
+              >
+                Remove all
+              </button>
+              <button
                 className="rounded bg-blue-500 p-2"
                 onClick={() => {
                   setWinPopup("");
@@ -271,18 +285,34 @@ export default function Wheel() {
             </div>
 
             <div className="sm:py-8 relative">
-              <button
-                disabled={angVel !== 0}
-                style={{
-                  cursor: angVel === 0 ? "pointer" : "not-allowed",
-                }}
-                className="absolute right-0 rounded bg-green-500 p-2"
-                onClick={() => {
-                  setContent(getShuffleContent(content));
-                }}
-              >
-                Xáo trộn
-              </button>
+              <div className="absolute right-0 rounded flex flex-col">
+                <button
+                  disabled={angVel !== 0}
+                  style={{
+                    cursor: angVel === 0 ? "pointer" : "not-allowed",
+                  }}
+                  className="bg-green-500 p-2"
+                  onClick={() => {
+                    setContent(getShuffleContent(content));
+                  }}
+                >
+                  Xáo trộn
+                </button>
+                <button
+                  disabled={angVel !== 0}
+                  style={{
+                    cursor: angVel === 0 ? "pointer" : "not-allowed",
+                  }}
+                  className="bg-red-500 p-2"
+                  onClick={() => {
+                    setContent((preContent) => {
+                      return preContent + "\n" + preContent;
+                    });
+                  }}
+                >
+                  +1
+                </button>
+              </div>
               <textarea
                 style={{
                   cursor: angVel === 0 ? "pointer" : "not-allowed",
