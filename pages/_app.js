@@ -1,41 +1,36 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
-import nProgress from "nprogress";
+import _get from "lodash/get";
+import { useState, useEffect } from "react";
+import cookie from "cookie";
+
+import { ThemeContext } from "../components/ThemeSwitcher/ThemeContext";
 
 import "../styles/globals.scss";
-import "../styles/nprogress.css";
 
-nProgress.configure({ showSpinner: false });
-
-export default function MyApp({ Component, pageProps }) {
-  const router = useRouter();
+function MyApp({ Component, pageProps }) {
+  const [theme, setTheme] = useState(pageProps.theme);
 
   useEffect(() => {
-    const handleStart = () => {
-      nProgress.start();
-    };
-    const handleStop = () => {
-      nProgress.done();
-    };
-
-    router.events.on("routeChangeStart", handleStart);
-    router.events.on("routeChangeComplete", handleStop);
-    router.events.on("routeChangeError", handleStop);
-
-    return () => {
-      router.events.off("routeChangeStart", handleStart);
-      router.events.off("routeChangeComplete", handleStop);
-      router.events.off("routeChangeError", handleStop);
-    };
-  }, [router]);
+    document.cookie = cookie.serialize("theme", theme);
+  }, [theme]);
 
   return (
-    <>
-      <div
-        style={{ zIndex: "-1" }}
-        className="fixed w-screen h-screen top-0 left-0 bg-cover bg-purple-50"
-      ></div>
-      <Component {...pageProps} />
-    </>
+    <div id="theme-provider" className={theme === "dark" ? "dark" : ""}>
+      <ThemeContext.Provider
+        value={{
+          theme,
+          setTheme,
+        }}
+      >
+        <Component {...pageProps} />
+      </ThemeContext.Provider>
+    </div>
   );
 }
+
+MyApp.getInitialProps = async (appContext) => {
+  const cookies = _get(appContext, "ctx.req.cookies", {});
+
+  return { pageProps: { theme: cookies?.theme } };
+};
+
+export default MyApp;

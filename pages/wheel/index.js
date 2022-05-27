@@ -1,11 +1,16 @@
+/* eslint-disable react/display-name */
 import Head from "next/head";
 import React, { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useSound from "use-sound";
+import Image from "next/image";
 
 import { useAnimationFrame } from "../../utils/hooks";
+import NavigationBar from "./NavigationBar";
 
-import "./style.scss";
+import Champion from "../../assets/img/champion.svg";
+
+import styles from "./index.module.css";
 
 const FRICTION = 0.99; // 0.995 = soft, 0.99 = mid, 0.98 = hard
 const rand = (m, M) => Math.random() * (M - m) + m;
@@ -61,7 +66,7 @@ const getShuffleContent = (content) => {
   return arrayContent.join("\n");
 };
 
-export default function Wheel() {
+function Wheel() {
   const router = useRouter();
   const [angVel, setAngVel] = useState(0); // Vận tốc góc
   const [angle, setAngle] = useState(0); // Góc
@@ -101,12 +106,12 @@ export default function Wheel() {
       ctx.save();
       // COLOR
       ctx.beginPath();
-      ctx.fillStyle = sector.color;
+      ctx.fillStyle = `${sector.color}`;
       ctx.moveTo(rad, rad);
       ctx.arc(rad, rad, rad, ang, ang + arc);
       ctx.lineTo(rad, rad);
       ctx.fill();
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 0.1;
       ctx.strokeStyle = "#fff";
       ctx.stroke();
       // TEXT
@@ -164,28 +169,18 @@ export default function Wheel() {
   }, [currentSector]);
 
   const sectors = getSectorsFromContent(content);
+
   return (
     <>
-      <Head>
-        <title>Xamxi | Vòng quay</title>
-        <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="Vòng quay" />
-        <meta property="og:description" content="Vòng quay" />
-      </Head>
       {winPopup !== "" && (
-        <div className="absolute w-full h-full flex items-center justify-center z-50 bg-gray-700 bg-opacity-80">
+        <div className="top-0 fixed w-full h-full flex items-center justify-center z-50 bg-gray-700 bg-opacity-80">
           <div className="rounded bg-white p-8 flex flex-col items-center space-y-4">
-            <img
-              className="flow-root"
-              src="/champion.svg"
-              alt="champion"
-              width={80}
-            ></img>
+            <Image src={Champion} alt="champion" width={80} height={80} />
             <div className="flow-root">!!! We have a winner !!!</div>
             <div className="flow-root text-xl">{winPopup}</div>
             <div>
               <button
-                className="rounded bg-red-500 p-2 mr-4"
+                className="rounded bg-orange-500 p-2 mr-4"
                 onClick={() => {
                   setContent((prevContent) => {
                     prevContent += "\n";
@@ -195,7 +190,7 @@ export default function Wheel() {
                   setWinPopup("");
                 }}
               >
-                Remove winner
+                Remove
               </button>
               <button
                 className="rounded bg-red-500 p-2 mr-4"
@@ -223,51 +218,37 @@ export default function Wheel() {
           </div>
         </div>
       )}
-      <div className="font-mono text-purple-900 w-full h-full px-4">
-        <div className="container h-full m-auto flex flex-col">
-          <div
-            className="relative flex flex-wrap justify-between items-center py-4"
-            style={{ minHeight: 84 }}
-          >
-            <div className="flex items-center">
-              <div
-                className="mx-2 text-center transition duration-100 ease-in-out transform hover:-translate-x-1 hover:scale-105 cursor-pointer"
-                onClick={() => {
-                  router.push("/");
-                }}
-              >
-                {"<<"} Trang chủ
-              </div>
-            </div>
-            <div className="flex-grow-0 sm:flex-grow"></div>
-            <div className="flex items-center">
-              <img
-                style={{ height: 48 }}
-                src="/pot.png"
-                alt="app-logo"
-                className="mb-4 sm:mb-0"
-              />
-              <div className="ml-4 text-xl font-bold">Những thứ xàm xí</div>
-            </div>
-            <div className="flex-grow-0 sm:flex-grow"></div>
-          </div>
 
+      <div
+        className="min-h-screen bg-blog-light-background dark:bg-blog-dark-background"
+        style={{
+          transitionProperty: "background-color",
+          transitionDuration: "0.15s",
+        }}
+      >
+        <div className="relative max-w-screen-lg w-full m-auto px-8 sm:px-12 lg:px-5 xl:px-0">
+          <NavigationBar />
           <div
-            className="relative grid sm:grid-cols-3 grid-cols-1 gap-16"
-            style={{ height: "calc(100vh - 84px)" }}
+            className="grid grid-cols-3 gap-x-24 gap-y-0"
+            style={{
+              minHeight: "calc(100vh - 128px)",
+            }}
           >
-            <div className="sm:col-span-2 col-span-1 sm:py-8">
-              <div id="square-div">
-                <div id="content-square">
-                  <div id="wheelOfFortune">
-                    <canvas id="wheel" ref={canvas}></canvas>
+            <div className="col-span-3 md:col-span-2 flex items-center">
+              <div className={styles["square-div"]}>
+                <div className={styles["content-square"]}>
+                  <div className="relative overflow-hidden w-full h-full flex items-center justify-center">
+                    <canvas
+                      className="block w-[98%] h-[98%]"
+                      ref={canvas}
+                    ></canvas>
                     <div
                       onClick={() => {
                         if (sectors.length > 0 && angVel === 0) {
                           setAngVel(rand(0.2, 0.5));
                         }
                       }}
-                      id="spin"
+                      className={styles.spin}
                       style={{
                         cursor: angVel === 0 ? "pointer" : "not-allowed",
                         background: sectors[currentSector]
@@ -283,42 +264,104 @@ export default function Wheel() {
                 </div>
               </div>
             </div>
-
-            <div className="sm:py-8 relative">
-              <div className="absolute right-0 rounded flex flex-col">
+            <div className="col-span-3 md:col-span-1 flex flex-col text-black dark:text-white my-8">
+              <div className="flex mb-5">
                 <button
                   disabled={angVel !== 0}
                   style={{
                     cursor: angVel === 0 ? "pointer" : "not-allowed",
                   }}
-                  className="bg-green-500 p-2"
+                  className="animated-arrow-button border-black dark:border-[#ffffff4d] mr-2"
                   onClick={() => {
                     setContent(getShuffleContent(content));
                   }}
                 >
-                  Xáo trộn
+                  <div className="animated-arrow-button-wrapper">
+                    Shuffle
+                    <div className="relative">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 256 256"
+                        className="animated-arrow-button-arrow w-5"
+                      >
+                        <rect width="256" height="256" fill="none" />
+                        <path
+                          d="M32,72H83.9a7.8,7.8,0,0,1,6.5,3.4l75.2,105.2a7.8,7.8,0,0,0,6.5,3.4H232"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="12"
+                        />
+                        <polyline
+                          points="208 48 232 72 208 96"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="12"
+                        />
+                        <polyline
+                          points="208 160 232 184 208 208"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="12"
+                        />
+                        <path
+                          d="M147.7,100.5l17.9-25.1a7.8,7.8,0,0,1,6.5-3.4H232"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="12"
+                        />
+                        <path
+                          d="M32,184H83.9a7.8,7.8,0,0,0,6.5-3.4l17.9-25.1"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="12"
+                        />
+                      </svg>
+                    </div>
+                  </div>
                 </button>
                 <button
                   disabled={angVel !== 0}
                   style={{
                     cursor: angVel === 0 ? "pointer" : "not-allowed",
                   }}
-                  className="bg-red-500 p-2"
+                  className="animated-arrow-button border-black dark:border-[#ffffff4d]"
                   onClick={() => {
                     setContent((preContent) => {
                       return preContent + "\n" + preContent;
                     });
                   }}
                 >
-                  +1
+                  <div className="animated-arrow-button-wrapper">
+                    Duplicate
+                    <div className="relative">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                        className="animated-arrow-button-arrow w-5"
+                      >
+                        <path d="M16 8h-2v3h-3v2h3v3h2v-3h3v-2h-3zM2 12c0-2.79 1.64-5.2 4.01-6.32V3.52C2.52 4.76 0 8.09 0 12s2.52 7.24 6.01 8.48v-2.16C3.64 17.2 2 14.79 2 12zm13-9c-4.96 0-9 4.04-9 9s4.04 9 9 9 9-4.04 9-9-4.04-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z" />
+                      </svg>
+                    </div>
+                  </div>
                 </button>
               </div>
               <textarea
                 style={{
-                  cursor: angVel === 0 ? "pointer" : "not-allowed",
+                  cursor: angVel === 0 ? "text" : "not-allowed",
                 }}
                 disabled={angVel !== 0}
-                className="bg-transparent h-96 w-full rounded border-2 p-4"
+                className="bg-transparent w-full h-full border border-solid border-black dark:border-[#ffffff4d] p-4"
                 value={content}
                 onChange={(e) => {
                   setContent(e.target.value);
@@ -331,3 +374,20 @@ export default function Wheel() {
     </>
   );
 }
+
+const withHead = (ChildComponent) => () =>
+  (
+    <>
+      <Head>
+        <title>Xamxi | Wheel of fortune</title>
+        <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content="Wheel of fortune" />
+        <meta property="og:url" content="https://xamxi.tk/wheel" />
+        <meta property="og:description" content="Wheel of fortune" />
+        <meta property="og:type" content="website" />
+      </Head>
+      {ChildComponent()}
+    </>
+  );
+
+export default withHead(Wheel);

@@ -1,80 +1,150 @@
+/* eslint-disable react/display-name */
 import Head from "next/head";
-import React from "react";
-import { useRouter } from "next/router";
 
-import VoiceSvg from "../components/svg/voice";
-import WheelSvg from "../components/svg/wheel";
-import UrlSvg from "../components/svg/link";
-// import QuoteSVG from "../components/svg/quote";
-import SlackSVG from "../components/svg/slack";
+import NavigationBar from "../components/NavigationBar";
+import Header from "../components/LandingPage/Header";
+import Features from "../components/LandingPage/Features";
 
-const renderCategory = ({ image, title, description, linkTo }) => {
-  const router = useRouter();
-
+function Home() {
   return (
     <div
-      class="p-6 group rounded-lg border border-purple-900 transition duration-100 transform hover:scale-105 hover:bg-purple-900 cursor-pointer flex items-center"
-      onClick={() => {
-        linkTo && router.push(linkTo);
+      className="min-h-screen bg-blog-light-background dark:bg-blog-dark-background"
+      style={{
+        transitionProperty: "background-color",
+        transitionDuration: "0.15s",
       }}
     >
-      {image &&
-        image({
-          className: "fill-current text-purple-900 group-hover:text-purple-50",
-          width: 64,
-          height: 64,
-        })}
-      <div className="space-y-2 ml-6 leading-relaxed">
-        <p class="font-bold text-purple-900 group-hover:text-purple-50">
-          {title}
-        </p>
-        <p class="text-purple-900 group-hover:text-purple-50">{description}</p>
-      </div>
-    </div>
-  );
-};
-
-function Landing() {
-  return (
-    <div className="space-y-16 font-mono container m-auto py-16 px-8">
-      <div className="space-y-4">
-        <div className="text-center text-3xl tracking-wide font-extrabold text-purple-900">
-          Những thứ xàm xí
-        </div>
-        <div className="text-center tracking-wide text-purple-900">
-          Những chiếc tiện ích có cũng như không. Nói chung là xàm lắm đừng quan
-          tâm
-        </div>
-      </div>
-      <div class="md:grid md:grid-cols-2 md:gap-x-12 md:gap-y-8">
-        {renderCategory({
-          image: UrlSvg,
-          title: "Tạo liên kết rút gọn",
-          description:
-            "Hỗ trợ tùy biến meta tag để gây lú cực mạnh cho người xem, không bấm link thì đố ai biết link gì luôn.",
-          linkTo: "/lien-ket-rut-gon",
-        })}
-        {renderCategory({
-          image: WheelSvg,
-          title: "Vòng quay ngẫu nhiên",
-          description:
-            "Công cụ chọn tên ngẫu nhiên từ danh sách tên được nhập sẵn, kết hợp với hiệu ứng âm thanh hài cốt.",
-          linkTo: "/vong-quay",
-        })}
-        {renderCategory({
-          image: VoiceSvg,
-          title: "Giọng chị Google",
-          description:
-            "Nhập văn bản bất kỳ để chuyển thành giọng chị Google, bấm nút tải phát nữa là được luôn.",
-          linkTo: "chi-google",
-        })}
-        {renderCategory({
-          image: SlackSVG,
-          title: "Slack APP: Poll",
-          description: 
-            "App cho Slack để tạo Poll, không bị giới hạn số lượng",
-          linkTo: "https://slack.com/oauth/v2/authorize?client_id=765809097975.3442671727680&scope=chat:write,commands,chat:write.public&user_scope=",
-        })}
+      <div className="relative max-w-screen-lg w-full m-auto px-8 sm:px-12 lg:px-5 xl:px-0">
+        <NavigationBar />
+        <Header />
+        <div className="mb-10 md:mb-16 lg:mb-20" />
+        <svg
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid slice"
+          className="gradient-bg gradient-bg-3 absolute mix-blend-screen overflow-visible opacity-[80%]"
+        >
+          <defs>
+            <radialGradient
+              id="Gradient1"
+              cx="50%"
+              cy="50%"
+              fx="10%"
+              fy="50%"
+              r=".5"
+            >
+              <animate
+                attributeName="fx"
+                dur="34s"
+                values="0%;10%;0%"
+                repeatCount="indefinite"
+              ></animate>
+              <stop offset="0%" stopColor="#00aeef"></stop>
+              <stop offset="100%" stopColor="#00aeef00"></stop>
+            </radialGradient>
+            <radialGradient
+              id="Gradient2"
+              cx="50%"
+              cy="50%"
+              fx="10%"
+              fy="50%"
+              r=".5"
+            >
+              <animate
+                attributeName="fx"
+                dur="23.5s"
+                values="0%;10%;0%"
+                repeatCount="indefinite"
+              ></animate>
+              <stop offset="0%" stopColor="#ec008c"></stop>
+              <stop offset="100%" stopColor="#ec008c00"></stop>
+            </radialGradient>
+            <radialGradient
+              id="Gradient3"
+              cx="50%"
+              cy="50%"
+              fx="50%"
+              fy="50%"
+              r=".5"
+            >
+              <animate
+                attributeName="fx"
+                dur="21.5s"
+                values="0%;10%;0%"
+                repeatCount="indefinite"
+              ></animate>
+              <stop offset="0%" stopColor="#fff200"></stop>
+              <stop offset="100%" stopColor="#fff20000"></stop>
+            </radialGradient>
+          </defs>
+          <rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient1)">
+            <animate
+              attributeName="x"
+              dur="20s"
+              values="25%;0%;25%"
+              repeatCount="indefinite"
+            ></animate>
+            <animate
+              attributeName="y"
+              dur="21s"
+              values="0%;25%;0%"
+              repeatCount="indefinite"
+            ></animate>
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 50 50"
+              to="360 50 50"
+              dur="17s"
+              repeatCount="indefinite"
+            ></animateTransform>
+          </rect>
+          <rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient2)">
+            <animate
+              attributeName="x"
+              dur="23s"
+              values="-25%;0%;-25%"
+              repeatCount="indefinite"
+            ></animate>
+            <animate
+              attributeName="y"
+              dur="24s"
+              values="0%;50%;0%"
+              repeatCount="indefinite"
+            ></animate>
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 50 50"
+              to="360 50 50"
+              dur="18s"
+              repeatCount="indefinite"
+            ></animateTransform>
+          </rect>
+          <rect x="0" y="0" width="100%" height="100%" fill="url(#Gradient3)">
+            <animate
+              attributeName="x"
+              dur="25s"
+              values="0%;25%;0%"
+              repeatCount="indefinite"
+            ></animate>
+            <animate
+              attributeName="y"
+              dur="26s"
+              values="0%;25%;0%"
+              repeatCount="indefinite"
+            ></animate>
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="360 50 50"
+              to="0 50 50"
+              dur="19s"
+              repeatCount="indefinite"
+            ></animateTransform>
+          </rect>
+        </svg>
+        <Features />
+        <div className="pt-12"></div>
       </div>
     </div>
   );
@@ -84,21 +154,15 @@ const withHead = (ChildComponent) => () =>
   (
     <>
       <Head>
-        <title>Những thứ xàm xí</title>
+        <title>XAMXI</title>
         <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="search"
-          type="application/opensearchdescription+xml"
-          title="Xamxi"
-          href="/opensearch.xml"
-        />
-        <meta property="og:title" content="Những thứ xàm xí" />
+        <meta property="og:title" content="XAMXI" />
         <meta property="og:url" content="https://xamxi.tk/" />
         <meta
           property="og:description"
           content="Ở đây cung cấp những chiếc tiện ích có như không có, tóm lại là như nồi, cam kết không giúp được gì."
         />
-        <meta property="og:image" content="/pot.png" />
+        <meta property="og:image" content="/vercel.png" />
         <meta property="og:image:width" content="1500" />
         <meta property="og:image:height" content="1500" />
         <meta property="og:type" content="website" />
@@ -107,4 +171,4 @@ const withHead = (ChildComponent) => () =>
     </>
   );
 
-export default withHead(Landing);
+export default withHead(Home);

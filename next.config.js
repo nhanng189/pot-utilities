@@ -1,5 +1,6 @@
-const withCSS = require("@zeit/next-css");
-const withSass = require("@zeit/next-sass");
-const withImages = require("next-images");
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+}
 
-module.exports = withImages(withSass(withCSS()));
+module.exports = nextConfig

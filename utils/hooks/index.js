@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 
 module.exports = {
   useAnimationFrame: (callback) => {
-    const engineRef = React.useRef();
-    const previousEngineRef = React.useRef();
+    const engineRef = useRef();
+    const previousEngineRef = useRef();
 
     const animate = (engine) => {
       if (previousEngineRef.current != undefined) {
@@ -13,7 +13,7 @@ module.exports = {
       engineRef.current = requestAnimationFrame(animate);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
       engineRef.current = requestAnimationFrame(animate);
       return () => cancelAnimationFrame(engineRef.current);
     }, []);

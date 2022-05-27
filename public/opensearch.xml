@@ -1,7 +1,0 @@
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
-                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
-  <ShortName>Chị Google</ShortName>
-  <Description>Giọng đọc của chị Google</Description>
-  <InputEncoding>UTF-8</InputEncoding>
-  <Url type="text/html" method="get" template="https://xamxi.tk/text-to-speech/?text={searchTerms}"/>
-</OpenSearchDescription>
