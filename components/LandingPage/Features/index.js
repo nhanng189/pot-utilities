@@ -31,6 +31,7 @@ const Feature = ({
         backgroundImage,
       }}
       ref={setRef}
+      key={title}
     >
       <div className="grid grid-cols-2 gap-8">
         <div className="col-span-2 md:col-span-1">
@@ -48,7 +49,7 @@ const Feature = ({
           <div className="flex flex-col">
             {_map(features, (feature) => {
               return (
-                <div className="inline-flex items-center">
+                <div className="inline-flex items-center" key={feature}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

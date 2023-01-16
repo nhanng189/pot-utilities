@@ -12,7 +12,7 @@ import Champion from "../../assets/img/champion.svg";
 
 import styles from "./index.module.css";
 
-const FRICTION = 0.99; // 0.995 = soft, 0.99 = mid, 0.98 = hard
+const FRICTION = 0.991; // 0.995 = soft, 0.99 = mid, 0.98 = hard
 const rand = (m, M) => Math.random() * (M - m) + m;
 const COLOR_WHEEL = [
   "#C9050B",
@@ -245,7 +245,7 @@ function Wheel() {
                     <div
                       onClick={() => {
                         if (sectors.length > 0 && angVel === 0) {
-                          setAngVel(rand(0.2, 0.5));
+                          setAngVel(rand(0.2, 0.65));
                         }
                       }}
                       className={styles.spin}

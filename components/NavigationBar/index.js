@@ -5,7 +5,7 @@ import ThemeSwitcher from "../ThemeSwitcher";
 const renderHeaderListItem = (title, linkTo) => {
   return (
     <li className="px-10 py-2 cursor-pointer">
-      <Link href={linkTo}>
+      <Link href={linkTo} key={title}>
         <a
           className={`animated-underline focus:outline-none block whitespace-nowrap text-lg font-medium dark:text-gray-400 dark:hover:text-white text-gray-500 hover:text-black`}
         >
