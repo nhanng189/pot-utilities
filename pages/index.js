@@ -171,4 +171,13 @@ const withHead = (ChildComponent) => () =>
     </>
   );
 
+export async function getServerSideProps(context) {
+  return {
+    redirect: {
+      permanent: false,
+      destination: "/wheel",
+    },
+  };
+}
+
 export default withHead(Home);
