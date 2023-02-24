@@ -119,7 +119,7 @@ function Wheel() {
       ctx.rotate(ang + arc / 2);
       ctx.textAlign = "right";
       ctx.fillStyle = "#fff";
-      ctx.font = "bold 25px monospace";
+      ctx.font = "bold 20px monospace";
       ctx.fillText(sector.label, rad - 10, 10);
       //
       ctx.restore();
@@ -180,7 +180,7 @@ function Wheel() {
             <div className="flow-root text-xl">{winPopup}</div>
             <div>
               <button
-                className="rounded bg-orange-500 p-2 mr-4"
+                className="rounded bg-orange-500 p-2 mr-4 text-white"
                 onClick={() => {
                   setContent((prevContent) => {
                     prevContent += "\n";
@@ -193,7 +193,7 @@ function Wheel() {
                 Remove
               </button>
               <button
-                className="rounded bg-red-500 p-2 mr-4"
+                className="rounded bg-red-500 p-2 mr-4 text-white"
                 onClick={() => {
                   setContent((prevContent) => {
                     prevContent += "\n";
@@ -207,7 +207,7 @@ function Wheel() {
                 Remove all
               </button>
               <button
-                className="rounded bg-blue-500 p-2"
+                className="rounded bg-blue-500 p-2 text-white"
                 onClick={() => {
                   setWinPopup("");
                 }}
