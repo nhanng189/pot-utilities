@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import nProgress from "nprogress";
+import { Analytics } from "@vercel/analytics/react";
 
 import "../styles/globals.scss";
 import "../styles/nprogress.css";
@@ -35,6 +36,7 @@ export default function MyApp({ Component, pageProps }) {
         style={{ zIndex: "-1" }}
         className="fixed w-screen h-screen top-0 left-0 bg-cover bg-purple-50"
       ></div>
+      <Analytics />
       <Component {...pageProps} />
     </>
   );
