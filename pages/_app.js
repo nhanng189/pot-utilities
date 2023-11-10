@@ -1,6 +1,7 @@
 import _get from "lodash/get";
 import { useState, useEffect } from "react";
 import cookie from "cookie";
+import { Analytics } from "@vercel/analytics/react";
 
 import { ThemeContext } from "../components/ThemeSwitcher/ThemeContext";
 
@@ -15,6 +16,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <div id="theme-provider" className={theme === "dark" ? "dark" : ""}>
+      <Analytics />
       <ThemeContext.Provider
         value={{
           theme,
