@@ -16,7 +16,6 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <div id="theme-provider" className={theme === "dark" ? "dark" : ""}>
-      <Analytics />
       <ThemeContext.Provider
         value={{
           theme,
@@ -24,6 +23,7 @@ function MyApp({ Component, pageProps }) {
         }}
       >
         <Component {...pageProps} />
+        <Analytics />
       </ThemeContext.Provider>
     </div>
   );
