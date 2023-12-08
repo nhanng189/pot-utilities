@@ -31,7 +31,7 @@ const NavigationBar = () => {
   );
 };
 
-const FRICTION = 0.991; // 0.995 = soft, 0.99 = mid, 0.98 = hard
+const FRICTION = 0.988; // 0.995 = soft, 0.99 = mid, 0.98 = hard
 const rand = (m, M) => Math.random() * (M - m) + m;
 const COLOR_WHEEL = [
   "#C9050B",
@@ -148,7 +148,7 @@ function Wheel() {
   useAnimationFrame(() => {
     setAngVel((prevAngVel) => {
       const newAngVel = prevAngVel * FRICTION;
-      if (newAngVel < 0.0001) {
+      if (newAngVel < 0.0003) {
         return 0;
       }
       return newAngVel;
